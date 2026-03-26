@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>AlgoRhythm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      margin: 40px;
+      background-color: #fafafa;
+      color: #333;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    h2 {
+      margin-top: 30px;
+      color: #34495e;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    strong {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AlgoRhythm</h1>
+
+    <h2>1. 프로젝트명</h2>
+    <p><strong>AI 기반 인력 운영 최적화</strong>를 위한 지능형 스케줄링 및 시프트 관리 웹 플랫폼</p>
+
+    <h2>2. 문제 배경 및 필요성</h2>
+    <ul>
+      <li>기존 스케줄링 서비스의 한계: AI 기반 최적화 없이 단순 알고리즘으로 운영되어 사용자 만족도가 낮음</li>
+      <li>수동 스케줄링의 비효율: 관리자들이 엑셀 및 수기로 2차 조정을 수행하며 행정 인력 낭비 발생</li>
+      <li>배정의 불균형과 편향성: 단순 순번 방식으로 숙련도 및 선호도 반영 부족</li>
+      <li>프로젝트 목적: 데이터 기반의 공정한 자동 스케줄링 시스템 구축</li>
+    </ul>
+
+    <h2>3. 확장 가능성</h2>
+    <p>교내 시간표 및 감독 배정 최적화 (타겟: 교사)</p>
+
+    <h2>4. 주요 핵심 기능</h2>
+    <ul>
+      <li>AI 지능형 자동 스케줄링</li>
+      <li>복수 시간표 대안 제시</li>
+      <li>인터랙티브 캘린더 (드래그 앤 드롭)</li>
+      <li>긴급 대타 매칭 및 시프트 교환</li>
+    </ul>
+
+    <h2>5. 구현 및 기술적 접근</h2>
+    <ul>
+      <li>웹 기반 아키텍처</li>
+      <li>AI 및 최적화 알고리즘 적용</li>
+    </ul>
+
+    <h2>6. 기대 효과</h2>
+    <ul>
+      <li>행정 비용 절감 및 운영 효율성 향상</li>
+      <li>공정하고 투명한 인력 배정 시스템 구축</li>
+    </ul>
+
+  </div>
+</body>
+</html>
