@@ -1,0 +1,2 @@
+fastapi
+pg8000
