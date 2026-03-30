@@ -50,36 +50,19 @@ def ensure_table():
             error TEXT
         )
     """)
-    # pg8000는 환경/드라이버 설정에 따라 DDL 반영에 커밋이 필요할 수 있어 안전하게 커밋합니다.
-    try:
-        conn.run("COMMIT")
-    except Exception:
-        pass
     conn.close()
 
 
 def insert_log(a, b, op, result, error):
-    conn = None
     try:
-        # 계산 요청에서는 ensure_table()이 호출되지 않을 수 있어, 삽입 전에 테이블을 보장합니다.
-        ensure_table()
         conn = get_conn()
         conn.run(
             "INSERT INTO calc_logs (a, b, op, result, error) VALUES (:a, :b, :op, :result, :error)",
             a=a, b=b, op=op, result=result, error=error,
         )
-        # 서버리스/드라이버 환경에서 insert가 커밋되지 않아 로그가 비는 케이스 방지
-        conn.run("COMMIT")
+        conn.close()
     except Exception as e:
-        # 화면에는 안 보일 수 있지만 Vercel Logs에서 확인 가능
-        print(f"[DB ERROR][insert_log] {e}")
-        raise
-    finally:
-        if conn:
-            try:
-                conn.close()
-            except Exception:
-                pass
+        print(f"[DB ERROR] {e}")
 
 
 # ---------------------------------------------------------------------------
@@ -127,41 +110,6 @@ document.getElementById("calcForm").addEventListener("submit", async (e) => {
 </body>
 </html>"""
 
-def render_logs_html(rows) -> str:
-    trs = []
-    for r in rows:
-        # r: (id, ts, a, b, op, result, error)
-        trs.append(
-            "<tr>"
-            f"<td>{r[0]}</td>"
-            f"<td>{r[1].isoformat()}</td>"
-            f"<td>{r[2]}</td>"
-            f"<td>{r[3]}</td>"
-            f"<td>{r[4]}</td>"
-            f"<td>{'' if r[5] is None else r[5]}</td>"
-            f"<td>{'' if r[6] is None else r[6]}</td>"
-            "</tr>"
-        )
-
-    table = (
-        "<table border='1' cellpadding='6' cellspacing='0'>"
-        "<thead><tr>"
-        "<th>id</th><th>ts</th><th>a</th><th>b</th><th>op</th><th>result</th><th>error</th>"
-        "</tr></thead>"
-        "<tbody>"
-        + ("".join(trs) if trs else "<tr><td colspan='7'>no logs</td></tr>")
-        + "</tbody></table>"
-    )
-
-    return (
-        "<!doctype html><html lang='ko'><head><meta charset='utf-8'/>"
-        "<title>Logs</title></head><body>"
-        "<h2>Calculator Logs</h2>"
-        "<p><a href='/'>← back</a></p>"
-        + table +
-        "</body></html>"
-    )
-
 
 # ---------------------------------------------------------------------------
 # API
@@ -170,19 +118,6 @@ def render_logs_html(rows) -> str:
 @app.get("/", response_class=HTMLResponse)
 def index():
     return HTML
-
-
-@app.get("/log", response_class=HTMLResponse)
-def log_page(limit: int = Query(20, ge=1, le=100)):
-    # HTML 페이지로 최근 로그를 보여줍니다.
-    ensure_table()
-    conn = get_conn()
-    rows = conn.run(
-        "SELECT id, ts, a, b, op, result, error FROM calc_logs ORDER BY id DESC LIMIT :limit",
-        limit=limit,
-    )
-    conn.close()
-    return render_logs_html(rows)
 
 
 @app.get("/api/calc")
@@ -203,11 +138,7 @@ def calc(a: float = Query(...), b: float = Query(...), op: str = Query("add")):
         return {"error": "division by zero"}
 
     result = ops[op]
-    try:
-        insert_log(a, b, op, result, None)
-    except Exception as e:
-        # 계산 기능은 유지하되, DB 저장 실패는 응답에 힌트로 남깁니다(디버깅용).
-        return {"result": result, "db_error": str(e)}
+    insert_log(a, b, op, result, None)
     return {"result": result}
 
 
@@ -239,7 +170,7 @@ def logs(limit: int = Query(20, ge=1, le=100)):
         return {"error": str(e)}
 
 
-@app.get("/api/init-db")
+@app.post("/api/init-db")
 def init_db():
     try:
         ensure_table()

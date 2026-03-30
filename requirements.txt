@@ -1,2 +1,3 @@
 fastapi
 pg8000
+uvicorn
