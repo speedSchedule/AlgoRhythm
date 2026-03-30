@@ -170,7 +170,7 @@ def logs(limit: int = Query(20, ge=1, le=100)):
         return {"error": str(e)}
 
 
-@app.post("/api/init-db")
+@app.get("/api/init-db")
 def init_db():
     try:
         ensure_table()
