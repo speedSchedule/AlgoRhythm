@@ -142,7 +142,7 @@ def calc(a: float = Query(...), b: float = Query(...), op: str = Query("add")):
     return {"result": result}
 
 
-@app.get("/log")
+@app.get("/api/logs")
 def logs(limit: int = Query(20, ge=1, le=100)):
     try:
         ensure_table()
