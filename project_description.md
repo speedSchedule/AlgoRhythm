@@ -13,6 +13,6 @@
 | Pain Point (해결할 문제) | 기존 시스템은 AI 최적화가 없는 단순 알고리즘이라 교사 개개인의 선호도나 숙련도 반영이 불가능함. 이로 인해 관리자가 엑셀로 2차 수동 수정을 거치는 등 행정력이 낭비됨. <br> 또한 가나다순/ 고정 순번제 배정은 특정 인원에게 업무가 쏠리는 불균형을 초래하여 조직 내 공정성 시비와 만족도 저하를 일으킴. |
 | 사용 기술 | AI : 딥러닝 기반 스케줄 최적화 알고리즘 (PyTorch / TensorFlow) <br> FE : React, Vite, Axios, Vercel, ESLint <br> BE : SpringBoot 3, MySQL, Hibernate(JPA), Docker, Gradle <br> DevOps : Docker, GitHub Action <br> Infra : AWS EC2 (Amazon Linux), AWS RDS
 | 기대 효과 | 스케줄링 업무 자동화를 통한 행정 비용 절감 및 운영 효율성 극대화. <br> 데이터 기반의 객관적 배정 시스템을 통한 운영의 투명성 확보. <br> 교사 업무 만족도 향상 및 조직 내 인력 운영 효율성 극대화.  |
-| GitHub Repo | [https://github.com/speedSchedule](https://github.com/speedSchedule) |
+| GitHub Repo | [https://github.com/speedSchedule/AlgoRhythm] (https://github.com/speedSchedule/AlgoRhythm) |
 | Team Ground Rule | [Team_Ground_Rule.md](https://github.com/speedSchedule/AlgoRhythm/blob/main/Team_Ground_Rule.md) |
 | 최종수정일 | 2025/03/16 |
